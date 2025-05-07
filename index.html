@@ -1,27 +1,132 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Selamat Ulang Tahun, Sayang!</title>
-  <link rel="stylesheet" href="static/style.css" />
+  <title>Happy Birthday, Sayang!</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: pink;
+      overflow-x: hidden;
+      color: #fff;
+      text-align: center;
+    }
+    .page {
+      display: none;
+      padding: 50px 20px;
+      min-height: 100vh;
+    }
+    .active { display: block; }
+    .btn {
+      background: #ff69b4;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      margin-top: 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+    .options button {
+      margin: 10px;
+    }
+    .hearts {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
+  </audio>  <div id="page1" class="page active">
     <h1>Selamat Ulang Tahun, Sayangku!</h1>
-    <p>Hari ini adalah hari spesial dalam hidupmu, dan juga dalam hidupku.</p>
-    <p>Aku bersyukur setiap hari memilikimu di sisiku.</p>
-    <p>Semoga semua impian dan harapanmu terkabul tahun ini.</p>
-    <p>Kau bukan hanya istriku, tapi sahabat terbaik dan cinta sejati dalam hidupku.</p>
-    <p class="penutup">Dengan sepenuh cinta,<br><strong>Suamimu, Ibat</strong></p>
-
-    <div class="video-section">
-      <h2>Video Spesial untukmu</h2>
-      <video controls>
-        <source src="static/video.mp4" type="video/mp4" />
-        Browsermu tidak mendukung pemutaran video.
-      </video>
+    <p>Terima kasih sudah menjadi istri terbaik. Ini hadiah kecil dariku.</p>
+    <img src="https://i.imgur.com/3yafPZZ.png" alt="love" width="200">
+    <br>
+    <button class="btn" onclick="nextPage(2)">Lanjut</button>
+  </div>  <div id="page2" class="page">
+    <h2>Pilih kejutan favoritmu!</h2>
+    <div class="options">
+      <button class="btn" onclick="selectSurprise('Dinner Romantis')">Dinner Romantis</button>
+      <button class="btn" onclick="selectSurprise('Staycation Weekend')">Staycation Weekend</button>
+      <button class="btn" onclick="selectSurprise('Spa & Me Time')">Spa & Me Time</button>
     </div>
-  </div>
-</body>
+  </div>  <div id="page3" class="page">
+    <h2>Pilih tanggal untuk kencan kita</h2>
+    <input type="date" id="datePicker">
+    <br>
+    <button class="btn" onclick="saveDate()">Simpan</button>
+  </div>  <div id="page4" class="page">
+    <h2>Rencana Kita</h2>
+    <p id="summary"></p>
+    <p>Terima kasih sudah menjadi bagian hidupku. Aku cinta kamu!</p>
+  </div><canvas class="hearts" id="heartCanvas"></canvas>
+
+  <script>
+    let surprise = "";
+    let date = "";
+
+    function nextPage(num) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page' + num).classList.add('active');
+    }
+
+    function selectSurprise(s) {
+      surprise = s;
+      nextPage(3);
+    }
+
+    function saveDate() {
+      date = document.getElementById('datePicker').value;
+      document.getElementById('summary').innerText = `Kita akan ${surprise} pada tanggal ${date}.`;
+      nextPage(4);
+    }
+
+    // Heart animation
+    const canvas = document.getElementById("heartCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    let hearts = [];
+
+    function drawHeart(x, y, size, color) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(0, -size, -size, -size, -size, 0);
+      ctx.bezierCurveTo(-size, size, 0, size * 1.5, 0, size * 2);
+      ctx.bezierCurveTo(0, size * 1.5, size, size, size, 0);
+      ctx.bezierCurveTo(size, -size, 0, -size, 0, 0);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function createHeart(e) {
+      hearts.push({
+        x: e.clientX,
+        y: e.clientY,
+        size: Math.random() * 10 + 10,
+        color: `rgba(255,105,180,${Math.random()})`,
+        dy: Math.random() * 1 + 0.5
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach((h, i) => {
+        drawHeart(h.x, h.y, h.size, h.color);
+        h.y -= h.dy;
+        if (h.y < -50) hearts.splice(i, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("mousemove", createHeart);
+    animate();
+  </script></body>
 </html>
