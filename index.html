@@ -5,8 +5,7 @@
   <title>
    Surprise Birthday for My Wife
   </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Montserrat&amp;display=swap" rel="stylesheet"/>
   <style>
@@ -61,6 +60,8 @@
       white-space: nowrap;
       overflow: hidden;
       animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+      display: inline-block;
+      max-width: 100%;
     }
     @keyframes typing {
       from {
@@ -79,9 +80,8 @@
  </head>
  <body class="relative min-h-screen flex flex-col items-center justify-center px-4 py-8 text-pink-700">
   <!-- Cursor Heart -->
-  <svg class="cursor-heart" fill="currentColor" id="cursorHeart" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
-   </path>
+  <svg class="cursor-heart" fill="currentColor" id="cursorHeart" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
   </svg>
   <!-- Container for pages -->
   <div class="w-full max-w-3xl bg-white rounded-3xl shadow-lg p-8 md:p-12 space-y-8" id="app">
@@ -91,11 +91,10 @@
      Selamat Ulang Tahun, Sayangku
     </h1>
     <p class="text-lg md:text-xl text-center max-w-xl leading-relaxed">
-     <span class="inline-block" id="typingMessage1">
-     </span>
+     <span class="inline-block" id="typingMessage1"></span>
     </p>
     <img alt="A romantic birthday surprise photo of a smiling woman with birthday decorations and warm pink lighting" class="rounded-xl shadow-lg w-full max-w-md object-cover" height="300" src="https://raw.githubusercontent.com/Ibat95/Ultah/main/FB_IMG_1732878092208.jpg" width="400"/>
-    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="toPage2">
+    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="toPage2" type="button">
      Lanjutkan
     </button>
    </section>
@@ -151,7 +150,7 @@
       </span>
      </label>
     </form>
-    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage3">
+    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage3" type="button">
      Lanjutkan
     </button>
    </section>
@@ -209,7 +208,7 @@
       </div>
      </label>
     </form>
-    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage4">
+    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage4" type="button">
      Lanjutkan
     </button>
    </section>
@@ -220,7 +219,7 @@
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl" id="scheduleCards">
     </div>
-    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="restart">
+    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="restart" type="button">
      Mulai Ulang
     </button>
    </section>
@@ -273,7 +272,6 @@
 
     // Cursor heart and trail hearts
     const cursorHeart = document.getElementById("cursorHeart");
-    const trailHearts = [];
 
     // Cursor position tracking
     document.addEventListener("mousemove", (e) => {
@@ -472,4 +470,3 @@
       cardsData.push({
         title: "Kencan Spesial",
         datetime: selectedDate,
-        description: "Sebuah kejutan romantis yang sudah aku siapk
