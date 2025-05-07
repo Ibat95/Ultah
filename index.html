@@ -1,132 +1,519 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday, Sayang!</title>
+<html class="scroll-smooth" lang="id">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Surprise Birthday for My Wife
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Montserrat&amp;display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: pink;
+   body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #ffe6f0;
       overflow-x: hidden;
-      color: #fff;
-      text-align: center;
+      cursor: none;
     }
-    .page {
-      display: none;
-      padding: 50px 20px;
-      min-height: 100vh;
-    }
-    .active { display: block; }
-    .btn {
-      background: #ff69b4;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      margin-top: 20px;
-      font-size: 1.1em;
-      cursor: pointer;
-    }
-    .options button {
-      margin: 10px;
-    }
-    .hearts {
+    .cursor-heart {
       position: fixed;
       pointer-events: none;
-      z-index: 999;
+      width: 24px;
+      height: 24px;
+      color: #ff4d94;
+      user-select: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.3);
+        opacity: 0.7;
+      }
+    }
+    .trail-heart {
+      position: fixed;
+      pointer-events: none;
+      width: 16px;
+      height: 16px;
+      color: #ff99c8;
+      user-select: none;
+      opacity: 0.8;
+      animation: fadeOut 1s forwards;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: translate(-50%, -50%) translateY(-20px) scale(0.5);
+      }
+    }
+    /* Typing effect */
+    .typing {
+      border-right: 2px solid #ff4d94;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+      to {
+        width: 100%;
+      }
+    }
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
     }
   </style>
-</head>
-<body>
-  <audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mp3">
-  </audio>  <div id="page1" class="page active">
-    <h1>Selamat Ulang Tahun, Sayangku!</h1>
-    <p>Terima kasih sudah menjadi istri terbaik. Ini hadiah kecil dariku.</p>
-    <img src="https://i.imgur.com/3yafPZZ.png" alt="love" width="200">
-    <br>
-    <button class="btn" onclick="nextPage(2)">Lanjut</button>
-  </div>  <div id="page2" class="page">
-    <h2>Pilih kejutan favoritmu!</h2>
-    <div class="options">
-      <button class="btn" onclick="selectSurprise('Dinner Romantis')">Dinner Romantis</button>
-      <button class="btn" onclick="selectSurprise('Staycation Weekend')">Staycation Weekend</button>
-      <button class="btn" onclick="selectSurprise('Spa & Me Time')">Spa & Me Time</button>
+ </head>
+ <body class="relative min-h-screen flex flex-col items-center justify-center px-4 py-8 text-pink-700">
+  <!-- Cursor Heart -->
+  <svg class="cursor-heart" fill="currentColor" id="cursorHeart" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z">
+   </path>
+  </svg>
+  <!-- Container for pages -->
+  <div class="w-full max-w-3xl bg-white rounded-3xl shadow-lg p-8 md:p-12 space-y-8" id="app">
+   <!-- Page 1 -->
+   <section class="flex flex-col items-center space-y-6" id="page1">
+    <h1 class="text-5xl font-great-vibes text-pink-600" style="font-family: 'Great Vibes', cursive;">
+     Selamat Ulang Tahun, Sayangku
+    </h1>
+    <p class="text-lg md:text-xl text-center max-w-xl leading-relaxed">
+     <span class="inline-block" id="typingMessage1">
+     </span>
+    </p>
+    <img alt="Romantic couple holding hands watching sunset with pink and warm colors" class="rounded-xl shadow-lg w-full max-w-md object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/4d1ca0ed-18ab-4ef3-983d-6df44b8ffd10.jpg" width="400"/>
+    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="toPage2">
+     Lanjutkan
+    </button>
+   </section>
+   <!-- Page 2 -->
+   <section class="hidden flex flex-col items-center space-y-6" id="page2">
+    <h2 class="text-4xl font-semibold text-pink-600">
+     Pilih 3 Trip Romantis Favoritmu
+    </h2>
+    <p class="text-center max-w-xl text-pink-700">
+     Pilih tiga destinasi romantis yang ingin kita kunjungi bersama. Aku ingin membuat momen tak terlupakan untuk kita.
+    </p>
+    <form class="w-full max-w-xl grid grid-cols-1 md:grid-cols-3 gap-6" id="tripForm">
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Bali"/>
+      <img alt="Tropical beach in Bali with palm trees and pink sunset sky" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/d0a85f81-8440-45aa-6faa-b29f36784c02.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Bali
+      </span>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Paris"/>
+      <img alt="Eiffel Tower in Paris with pink sky during sunset and romantic atmosphere" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/b077699b-ea51-4c04-ed90-c6e2eddfc402.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Paris
+      </span>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Venice"/>
+      <img alt="Venice canal with gondola and pink sunset sky, romantic water city" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/043a85ea-c609-4546-7d7a-114644f2e5cf.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Venice
+      </span>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Santorini"/>
+      <img alt="Santorini white and blue houses with pink sunset sky, romantic island" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/ba9f51c3-342e-4a08-f021-8c2cb8a38b90.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Santorini
+      </span>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Kyoto"/>
+      <img alt="Kyoto temple with pink cherry blossoms in spring, romantic Japanese garden" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/353a348f-5d48-44f3-50e0-18f9627241fa.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Kyoto
+      </span>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex flex-col items-center hover:border-pink-500 transition">
+      <input class="hidden" name="trip" type="checkbox" value="Maldives"/>
+      <img alt="Maldives overwater bungalows with pink sunset sky and turquoise water" class="rounded-lg mb-3 w-full object-cover" height="150" src="https://storage.googleapis.com/a1aa/image/7e5aae24-effa-45fb-eb03-a30b02046fb1.jpg" width="200"/>
+      <span class="text-pink-700 font-medium text-lg">
+       Maldives
+      </span>
+     </label>
+    </form>
+    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage3">
+     Lanjutkan
+    </button>
+   </section>
+   <!-- Page 3 -->
+   <section class="hidden flex flex-col items-center space-y-6" id="page3">
+    <h2 class="text-4xl font-semibold text-pink-600">
+     Pilih Jadwal Kencanmu
+    </h2>
+    <p class="text-center max-w-xl text-pink-700">
+     Pilih jadwal kencan yang paling kamu suka. Aku ingin memastikan kita punya waktu spesial bersama.
+    </p>
+    <form class="w-full max-w-xl grid grid-cols-1 md:grid-cols-2 gap-6" id="dateForm">
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex items-center space-x-4 hover:border-pink-500 transition">
+      <input class="hidden" name="date" type="radio" value="Sabtu, 19:00"/>
+      <div class="flex flex-col">
+       <span class="text-pink-700 font-semibold text-lg">
+        Sabtu, 19:00
+       </span>
+       <span class="text-pink-500 text-sm">
+        Makan malam romantis di restoran favorit
+       </span>
+      </div>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex items-center space-x-4 hover:border-pink-500 transition">
+      <input class="hidden" name="date" type="radio" value="Minggu, 10:00"/>
+      <div class="flex flex-col">
+       <span class="text-pink-700 font-semibold text-lg">
+        Minggu, 10:00
+       </span>
+       <span class="text-pink-500 text-sm">
+        Piknik pagi di taman bunga
+       </span>
+      </div>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex items-center space-x-4 hover:border-pink-500 transition">
+      <input class="hidden" name="date" type="radio" value="Jumat, 20:00"/>
+      <div class="flex flex-col">
+       <span class="text-pink-700 font-semibold text-lg">
+        Jumat, 20:00
+       </span>
+       <span class="text-pink-500 text-sm">
+        Nonton film romantis di rumah
+       </span>
+      </div>
+     </label>
+     <label class="cursor-pointer bg-pink-50 border-2 border-pink-300 rounded-xl p-4 flex items-center space-x-4 hover:border-pink-500 transition">
+      <input class="hidden" name="date" type="radio" value="Sabtu, 15:00"/>
+      <div class="flex flex-col">
+       <span class="text-pink-700 font-semibold text-lg">
+        Sabtu, 15:00
+       </span>
+       <span class="text-pink-500 text-sm">
+        Jalan-jalan sore di tepi pantai
+       </span>
+      </div>
+     </label>
+    </form>
+    <button class="mt-4 bg-pink-300 cursor-not-allowed text-white font-semibold py-3 px-8 rounded-full shadow-md transition disabled:opacity-50" disabled="" id="toPage4">
+     Lanjutkan
+    </button>
+   </section>
+   <!-- Page 4 -->
+   <section class="hidden flex flex-col items-center space-y-8" id="page4">
+    <h2 class="text-4xl font-semibold text-pink-600">
+     Jadwal Kencan Kita
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl" id="scheduleCards">
+     <!-- Cards will be inserted here by JS -->
     </div>
-  </div>  <div id="page3" class="page">
-    <h2>Pilih tanggal untuk kencan kita</h2>
-    <input type="date" id="datePicker">
-    <br>
-    <button class="btn" onclick="saveDate()">Simpan</button>
-  </div>  <div id="page4" class="page">
-    <h2>Rencana Kita</h2>
-    <p id="summary"></p>
-    <p>Terima kasih sudah menjadi bagian hidupku. Aku cinta kamu!</p>
-  </div><canvas class="hearts" id="heartCanvas"></canvas>
-
+    <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="restart">
+     Mulai Ulang
+    </button>
+   </section>
+  </div>
   <script>
-    let surprise = "";
-    let date = "";
+   // Fonts for Great Vibes fallback
+    document.querySelector('h1').style.fontFamily = "'Great Vibes', cursive";
 
-    function nextPage(num) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById('page' + num).classList.add('active');
-    }
+    // Typing messages for page 1
+    const message1 = "Aku ingin mengucapkan betapa berartinya kamu dalam hidupku. Semoga ulang tahunmu penuh cinta dan kebahagiaan.";
+    const typingMessage1 = document.getElementById("typingMessage1");
 
-    function selectSurprise(s) {
-      surprise = s;
-      nextPage(3);
-    }
-
-    function saveDate() {
-      date = document.getElementById('datePicker').value;
-      document.getElementById('summary').innerText = `Kita akan ${surprise} pada tanggal ${date}.`;
-      nextPage(4);
-    }
-
-    // Heart animation
-    const canvas = document.getElementById("heartCanvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let hearts = [];
-
-    function drawHeart(x, y, size, color) {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.bezierCurveTo(0, -size, -size, -size, -size, 0);
-      ctx.bezierCurveTo(-size, size, 0, size * 1.5, 0, size * 2);
-      ctx.bezierCurveTo(0, size * 1.5, size, size, size, 0);
-      ctx.bezierCurveTo(size, -size, 0, -size, 0, 0);
-      ctx.fillStyle = color;
-      ctx.fill();
-      ctx.restore();
-    }
-
-    function createHeart(e) {
-      hearts.push({
-        x: e.clientX,
-        y: e.clientY,
-        size: Math.random() * 10 + 10,
-        color: `rgba(255,105,180,${Math.random()})`,
-        dy: Math.random() * 1 + 0.5
+    function typeText(element, text, speed = 40) {
+      return new Promise((resolve) => {
+        let i = 0;
+        element.textContent = "";
+        element.classList.add("typing");
+        function typing() {
+          if (i < text.length) {
+            element.textContent += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+          } else {
+            element.classList.remove("typing");
+            resolve();
+          }
+        }
+        typing();
       });
     }
 
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      hearts.forEach((h, i) => {
-        drawHeart(h.x, h.y, h.size, h.color);
-        h.y -= h.dy;
-        if (h.y < -50) hearts.splice(i, 1);
+    // Pages
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const page3 = document.getElementById("page3");
+    const page4 = document.getElementById("page4");
+
+    // Buttons
+    const toPage2Btn = document.getElementById("toPage2");
+    const toPage3Btn = document.getElementById("toPage3");
+    const toPage4Btn = document.getElementById("toPage4");
+    const restartBtn = document.getElementById("restart");
+
+    // Forms
+    const tripForm = document.getElementById("tripForm");
+    const dateForm = document.getElementById("dateForm");
+
+    // Schedule cards container
+    const scheduleCards = document.getElementById("scheduleCards");
+
+    // Cursor heart and trail hearts
+    const cursorHeart = document.getElementById("cursorHeart");
+    const trailHearts = [];
+
+    // Cursor position tracking
+    document.addEventListener("mousemove", (e) => {
+      cursorHeart.style.left = e.clientX + "px";
+      cursorHeart.style.top = e.clientY + "px";
+
+      // Create trail heart
+      const trailHeart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      trailHeart.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+      trailHeart.setAttribute("viewBox", "0 0 24 24");
+      trailHeart.setAttribute("fill", "#ff99c8");
+      trailHeart.setAttribute("class", "trail-heart");
+      trailHeart.style.left = e.clientX + "px";
+      trailHeart.style.top = e.clientY + "px";
+      trailHeart.style.position = "fixed";
+      trailHeart.style.pointerEvents = "none";
+      trailHeart.style.width = "16px";
+      trailHeart.style.height = "16px";
+      trailHeart.style.color = "#ff99c8";
+      trailHeart.style.userSelect = "none";
+      trailHeart.style.zIndex = "9998";
+      trailHeart.style.transform = "translate(-50%, -50%)";
+      trailHeart.innerHTML = `<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>`;
+      document.body.appendChild(trailHeart);
+
+      setTimeout(() => {
+        trailHeart.style.animation = "fadeOut 1s forwards";
+      }, 10);
+
+      setTimeout(() => {
+        trailHeart.remove();
+      }, 1100);
+    });
+
+    // Page 1 typing effect on load
+    window.addEventListener("load", async () => {
+      await typeText(typingMessage1, message1);
+    });
+
+    // Page 1 to Page 2
+    toPage2Btn.addEventListener("click", async () => {
+      toPage2Btn.disabled = true;
+      toPage2Btn.textContent = "Loading...";
+      await fadeOut(page1);
+      page1.classList.add("hidden");
+      page2.classList.remove("hidden");
+      toPage2Btn.disabled = false;
+      toPage2Btn.textContent = "Lanjutkan";
+      // Scroll top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Enable toPage3Btn only if exactly 3 trips selected
+    tripForm.addEventListener("change", () => {
+      const checked = tripForm.querySelectorAll('input[type="checkbox"]:checked');
+      if (checked.length === 3) {
+        toPage3Btn.disabled = false;
+        toPage3Btn.classList.remove("cursor-not-allowed", "bg-pink-300", "opacity-50");
+        toPage3Btn.classList.add("bg-pink-500", "hover:bg-pink-600");
+      } else {
+        toPage3Btn.disabled = true;
+        toPage3Btn.classList.add("cursor-not-allowed", "bg-pink-300", "opacity-50");
+        toPage3Btn.classList.remove("bg-pink-500", "hover:bg-pink-600");
+      }
+    });
+
+    // Page 2 to Page 3 with typing effect
+    toPage3Btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      toPage3Btn.disabled = true;
+      toPage3Btn.textContent = "Loading...";
+      await fadeOut(page2);
+      page2.classList.add("hidden");
+      page3.classList.remove("hidden");
+      toPage3Btn.disabled = false;
+      toPage3Btn.textContent = "Lanjutkan";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Typing effect on page 3 paragraph
+      const p = page3.querySelector("p");
+      const text = "Aku sudah menyiapkan beberapa jadwal kencan spesial untuk kita. Pilih yang paling kamu suka ya.";
+      await typeText(p, text, 30);
+    });
+
+    // Enable toPage4Btn only if a date is selected
+    dateForm.addEventListener("change", () => {
+      const checked = dateForm.querySelector('input[type="radio"]:checked');
+      if (checked) {
+        toPage4Btn.disabled = false;
+        toPage4Btn.classList.remove("cursor-not-allowed", "bg-pink-300", "opacity-50");
+        toPage4Btn.classList.add("bg-pink-500", "hover:bg-pink-600");
+      } else {
+        toPage4Btn.disabled = true;
+        toPage4Btn.classList.add("cursor-not-allowed", "bg-pink-300", "opacity-50");
+        toPage4Btn.classList.remove("bg-pink-500", "hover:bg-pink-600");
+      }
+    });
+
+    // Page 3 to Page 4
+    toPage4Btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      toPage4Btn.disabled = true;
+      toPage4Btn.textContent = "Loading...";
+      await fadeOut(page3);
+      page3.classList.add("hidden");
+      page4.classList.remove("hidden");
+      toPage4Btn.disabled = false;
+      toPage4Btn.textContent = "Lanjutkan";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Build schedule cards from selected trips and date
+      buildScheduleCards();
+    });
+
+    // Restart button
+    restartBtn.addEventListener("click", () => {
+      // Reset forms
+      tripForm.reset();
+      dateForm.reset();
+      toPage3Btn.disabled = true;
+      toPage3Btn.classList.add("cursor-not-allowed", "bg-pink-300", "opacity-50");
+      toPage3Btn.classList.remove("bg-pink-500", "hover:bg-pink-600");
+      toPage4Btn.disabled = true;
+      toPage4Btn.classList.add("cursor-not-allowed", "bg-pink-300", "opacity-50");
+      toPage4Btn.classList.remove("bg-pink-500", "hover:bg-pink-600");
+
+      // Clear schedule cards
+      scheduleCards.innerHTML = "";
+
+      // Show page 1
+      page4.classList.add("hidden");
+      page1.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // Restart typing on page 1
+      typeText(typingMessage1, message1);
+    });
+
+    // Fade out helper
+    function fadeOut(element) {
+      return new Promise((resolve) => {
+        element.style.transition = "opacity 0.5s ease";
+        element.style.opacity = "0";
+        setTimeout(() => {
+          element.style.opacity = "";
+          element.style.transition = "";
+          resolve();
+        }, 500);
       });
-      requestAnimationFrame(animate);
     }
 
-    window.addEventListener("mousemove", createHeart);
-    animate();
-  </script></body>
+    // Build schedule cards for page 4
+    function buildScheduleCards() {
+      scheduleCards.innerHTML = "";
+      // Get selected trips
+      const selectedTrips = Array.from(tripForm.querySelectorAll('input[type="checkbox"]:checked')).map(
+        (input) => input.value
+      );
+      // Get selected date
+      const selectedDateInput = dateForm.querySelector('input[type="radio"]:checked');
+      const selectedDate = selectedDateInput ? selectedDateInput.value : "";
+
+      // We need 4 cards total. If less than 4 trips, fill with repeated or default
+      const cardsData = [];
+
+      // Card 1: Selected date + first trip
+      if (selectedTrips.length > 0) {
+        cardsData.push({
+          title: `Kencan di ${selectedTrips[0]}`,
+          datetime: selectedDate,
+          description: `Nikmati momen romantis di ${selectedTrips[0]} bersama aku.`,
+          imgSrc: getTripImage(selectedTrips[0]),
+          imgAlt: `Pemandangan romantis di ${selectedTrips[0]} dengan warna pink dan suasana hangat`,
+        });
+      }
+      // Card 2: Selected date + second trip
+      if (selectedTrips.length > 1) {
+        cardsData.push({
+          title: `Kencan di ${selectedTrips[1]}`,
+          datetime: selectedDate,
+          description: `Momen indah dan penuh cinta di ${selectedTrips[1]}.`,
+          imgSrc: getTripImage(selectedTrips[1]),
+          imgAlt: `Pemandangan romantis di ${selectedTrips[1]} dengan warna pink dan suasana hangat`,
+        });
+      }
+      // Card 3: Selected date + third trip
+      if (selectedTrips.length > 2) {
+        cardsData.push({
+          title: `Kencan di ${selectedTrips[2]}`,
+          datetime: selectedDate,
+          description: `Kenangan tak terlupakan di ${selectedTrips[2]} bersama aku.`,
+          imgSrc: getTripImage(selectedTrips[2]),
+          imgAlt: `Pemandangan romantis di ${selectedTrips[2]} dengan warna pink dan suasana hangat`,
+        });
+      }
+      // Card 4: Special surprise card
+      cardsData.push({
+        title: "Kencan Spesial",
+        datetime: selectedDate,
+        description: "Sebuah kejutan romantis yang sudah aku siapkan khusus untukmu.",
+        imgSrc: "https://placehold.co/400x250/pink-ffb6c1/fff/png/romantic-surprise-candlelight-dinner",
+        imgAlt: "Meja makan romantis dengan lilin dan dekorasi pink untuk kejutan ulang tahun",
+      });
+
+      // Create cards
+      cardsData.forEach((card) => {
+        const cardEl = document.createElement("div");
+        cardEl.className =
+          "bg-pink-50 border-2 border-pink-300 rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row";
+        cardEl.innerHTML = `
+          <img src="${card.imgSrc}" alt="${card.imgAlt}" class="w-full md:w-48 object-cover" />
+          <div class="p-4 flex flex-col justify-center">
+            <h3 class="text-2xl font-semibold text-pink-600 mb-1">${card.title}</h3>
+            <p class="text-pink-500 mb-2">${card.datetime}</p>
+            <p class="text-pink-700">${card.description}</p>
+          </div>
+        `;
+        scheduleCards.appendChild(cardEl);
+      });
+    }
+
+    // Helper to get trip image by name
+    function getTripImage(trip) {
+      switch (trip) {
+        case "Bali":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/tropical-beach-bali";
+        case "Paris":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/eiffel-tower-paris-pink-sky";
+        case "Venice":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/venice-canal-gondola-pink-sunset";
+        case "Santorini":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/santorini-white-blue-houses-pink-sunset";
+        case "Kyoto":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/kyoto-temple-pink-cherry-blossoms";
+        case "Maldives":
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/maldives-overwater-bungalows-pink-sunset";
+        default:
+          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/romantic-destination-pink";
+      }
+    }
+  </script>
+ </body>
 </html>
