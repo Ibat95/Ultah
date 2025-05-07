@@ -94,7 +94,7 @@
      <span class="inline-block" id="typingMessage1">
      </span>
     </p>
-    <img alt="Romantic couple holding hands watching sunset with pink and warm colors" class="rounded-xl shadow-lg w-full max-w-md object-cover" height="300" src="https://storage.googleapis.com/a1aa/image/4d1ca0ed-18ab-4ef3-983d-6df44b8ffd10.jpg" width="400"/>
+    <img alt="A romantic birthday surprise photo of a smiling woman with birthday decorations and warm pink lighting" class="rounded-xl shadow-lg w-full max-w-md object-cover" height="300" src="https://raw.githubusercontent.com/Ibat95/Ultah/main/FB_IMG_1732878092208.jpg" width="400"/>
     <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="toPage2">
      Lanjutkan
     </button>
@@ -219,7 +219,6 @@
      Jadwal Kencan Kita
     </h2>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl" id="scheduleCards">
-     <!-- Cards will be inserted here by JS -->
     </div>
     <button class="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold py-3 px-8 rounded-full shadow-md transition" id="restart">
      Mulai Ulang
@@ -473,47 +472,4 @@
       cardsData.push({
         title: "Kencan Spesial",
         datetime: selectedDate,
-        description: "Sebuah kejutan romantis yang sudah aku siapkan khusus untukmu.",
-        imgSrc: "https://placehold.co/400x250/pink-ffb6c1/fff/png/romantic-surprise-candlelight-dinner",
-        imgAlt: "Meja makan romantis dengan lilin dan dekorasi pink untuk kejutan ulang tahun",
-      });
-
-      // Create cards
-      cardsData.forEach((card) => {
-        const cardEl = document.createElement("div");
-        cardEl.className =
-          "bg-pink-50 border-2 border-pink-300 rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row";
-        cardEl.innerHTML = `
-          <img src="${card.imgSrc}" alt="${card.imgAlt}" class="w-full md:w-48 object-cover" />
-          <div class="p-4 flex flex-col justify-center">
-            <h3 class="text-2xl font-semibold text-pink-600 mb-1">${card.title}</h3>
-            <p class="text-pink-500 mb-2">${card.datetime}</p>
-            <p class="text-pink-700">${card.description}</p>
-          </div>
-        `;
-        scheduleCards.appendChild(cardEl);
-      });
-    }
-
-    // Helper to get trip image by name
-    function getTripImage(trip) {
-      switch (trip) {
-        case "Bali":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/tropical-beach-bali";
-        case "Paris":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/eiffel-tower-paris-pink-sky";
-        case "Venice":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/venice-canal-gondola-pink-sunset";
-        case "Santorini":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/santorini-white-blue-houses-pink-sunset";
-        case "Kyoto":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/kyoto-temple-pink-cherry-blossoms";
-        case "Maldives":
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/maldives-overwater-bungalows-pink-sunset";
-        default:
-          return "https://placehold.co/400x250/pink-ffb6c1/fff/png/romantic-destination-pink";
-      }
-    }
-  </script>
- </body>
-</html>
+        description: "Sebuah kejutan romantis yang sudah aku siapk
